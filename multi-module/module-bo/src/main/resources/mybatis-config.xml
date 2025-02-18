@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "HTTP://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <settings>
+        <setting name="cacheEnabled" value="true" />
+        <setting name="lazyLoadingEnabled" value="true" />
+        <setting name="aggressiveLazyLoading" value="true" />
+        <setting name="defaultExecutorType" value="REUSE" />
+        <setting name="defaultStatementTimeout" value="300" />
+        <setting name="localCacheScope" value="SESSION" />
+        <setting name="useGeneratedKeys" value="true" />
+        <!-- snake to camel -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!-- 쿼리 결과가 null인 경우 누락되지 않도록 -->
+        <setting name="callSettersOnNulls" value="true"/>
+        <!-- 쿼리에 보내는 파라미터가 null인 경우 에러 발생 방지 -->
+        <setting name="jdbcTypeForNull" value="NULL"/>
+    </settings>
+
+    <plugins>
+        <plugin interceptor="com.project.module.common.core.interceptor.MybatisInterceptor" />
+        <plugin interceptor="com.project.module.common.core.interceptor.MaskingInterceptor" />
+    </plugins>
+</configuration>

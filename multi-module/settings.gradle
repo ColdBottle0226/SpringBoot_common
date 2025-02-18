@@ -1,0 +1,12 @@
+rootProject.name = 'multi-module'
+
+include 'module-bo'
+include 'module-fo'
+include 'module-batch'
+include 'module-common'
+include 'module-common:core'
+include 'module-common:api'
+
+project(':module-common').projectDir = file('module-common')
+project(':module-common:core').projectDir = file('module-common/core')
+project(':module-common:api').projectDir = file('module-common/api')

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.module.bo.mb.repository.UserMapper">
+
+    <select id="checkDuplicated" resultType="com.project.module.bo.mb.domain.dto.UserDto">
+        SELECT
+        USER_ID
+        , USER_SNO
+        , USER_EMAIL
+        , USER_TELNO
+        , CARD_ID
+        FROM
+        tb_user_mst
+        WHERE
+        USER_ID = #{userId}
+    </select>
+
+    <select id="login" resultType="com.project.module.bo.mb.domain.dto.UserDto">
+        SELECT USER_ID, USER_NAME, USER_SEQ, USER_PW
+        FROM april.tb_user_mst
+        WHERE USER_ID = #{userId}
+    </select>
+
+    <insert id="join" parameterType="com.project.module.bo.mb.domain.vo.UserVO">
+        <selectKey resultType="int" keyProperty="userSeq" order="BEFORE">
+            SELECT COALESCE(MAX(USER_SEQ), 0) + 1 FROM tb_user_mst
+        </selectKey>
+        INSERT INTO tb_user_mst
+        (
+        USER_SEQ
+        , USER_ID
+        , USER_PW
+        , USER_NAME
+        , CRE_ID
+        , CRE_DT
+        , UDT_ID
+        , UDT_DT
+        )
+        VALUES
+        (
+        #{userSeq}
+        ,#{userId}
+        ,#{userPw}
+        ,#{userName}
+        ,#{userId}
+        , date_format(now(),'%Y%m%d%H%i%s')
+        ,#{userId}
+        , date_format(now(),'%Y%m%d%H%i%s')
+        )
+    </insert>
+
+</mapper>
+
+
