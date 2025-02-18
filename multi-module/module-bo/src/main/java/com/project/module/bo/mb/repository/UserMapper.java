@@ -12,7 +12,7 @@ public interface UserMapper {
 
     List<UserDto> checkDuplicated(String userId);
 
-    Optional<UserDto> login(UserDto userDto);
+    Optional<UserDto> findByUserId(UserDto userDto);
 
     void join(UserVO userVO);
 }
