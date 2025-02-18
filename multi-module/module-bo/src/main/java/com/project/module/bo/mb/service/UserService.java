@@ -17,7 +17,7 @@ public interface UserService {
      * @param userDto
      * @return
      */
-    Optional<UserDto> login(UserDto userDto);
+    Optional<UserDto> findByUserId(UserDto userDto);
 
     /**
      * 회원가입

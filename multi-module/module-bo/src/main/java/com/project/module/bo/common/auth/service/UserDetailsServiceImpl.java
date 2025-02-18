@@ -40,7 +40,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
 
         // [STEP2] 서비스를 호출하여 실제 데이터베이스 조회를 통해서 사용자 정보를 조회한다.
-        return userService.login(UserDto.builder().userId(userId).build())
+        return userService.findByUserId(UserDto.builder().userId(userId).build())
                 .map(user -> new UserDetailsDto(user, Collections.singleton(new SimpleGrantedAuthority(user.getUserId()))))
                 .orElseThrow(() -> new BadCredentialsException("사용자 정보가 올바르지 않습니다: " + userId));
     }

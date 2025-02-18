@@ -27,8 +27,8 @@ public class UserServiceImpl implements UserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public Optional<UserDto> login(UserDto userVo) {
-        return userMapper.login(userVo);
+    public Optional<UserDto> findByUserId(UserDto userVo) {
+        return userMapper.findByUserId(userVo);
     }
 
     @Override

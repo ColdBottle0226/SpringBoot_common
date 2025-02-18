@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -46,5 +47,14 @@ public class UserController {
     @Operation(summary = "회원가입", description = "회원가입 실행")
     public ResponseEntity<CmmnResponseModel> memberJoin(@RequestBody UserDto userDto) {
         return new ResponseEntity<>(userService.memberJoin(userDto), HttpStatus.OK);
+    }
+
+    /**
+     * 로그인
+     */
+    @PostMapping("/login")
+    @Operation(summary = "로그인", description = "로그인 실행")
+    public ResponseEntity<Optional<UserDto>> memberLogin(@RequestBody UserDto userDto) {
+        return new ResponseEntity<>(userService.findByUserId(userDto), HttpStatus.OK);
     }
 }

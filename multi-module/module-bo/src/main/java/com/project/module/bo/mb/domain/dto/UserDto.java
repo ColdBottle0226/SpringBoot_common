@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Schema(description = "임시 회원 DTOI")
+@Schema(description = "임시 회원 DTO")
 public class UserDto {
     @Schema(description = "회원 시퀀스", example = "1")
     private int userSeq;
@@ -24,6 +24,7 @@ public class UserDto {
 
     @Schema(description = "비밀번호", example = "1234")
     private String userPw;
+
 
     @Builder(toBuilder = true)
     private UserDto(int userSeq, String userId, String userName, String userPw) {
