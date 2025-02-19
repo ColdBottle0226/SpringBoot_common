@@ -21,6 +21,11 @@ public class ErrorResponse {
         return ResponseEntity.status(httpStatus).body(ErrorResponse.builder().status(httpStatus.value()).error(httpStatus.name()).message(msg).build());
     }
 
+    public static ResponseEntity<?> toResponseEntity(HttpStatus httpStatus, String code, String msg) {
+        return ResponseEntity.status(httpStatus)
+                .body(ErrorResponse.builder().status(httpStatus.value()).error(httpStatus.name()).code(code).message(msg).build());
+    }
+
     public static ResponseEntity<?> toResponseEntity(HttpStatus httpStatus, String msg, Object args) {
         return ResponseEntity.status(httpStatus)
                 .body(ErrorResponse.builder().status(httpStatus.value()).error(httpStatus.name()).message(msg).args(args).build());

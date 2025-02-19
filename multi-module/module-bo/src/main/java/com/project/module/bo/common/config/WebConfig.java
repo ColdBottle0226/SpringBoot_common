@@ -23,9 +23,9 @@ public class WebConfig implements WebMvcConfigurer {
     // 2. interceptor(로그인 체크, JWT 인증..)
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(customInterceptor)
-//                .addPathPatterns("/api/**") // 적용할 URL 패턴 지정
-//                .excludePathPatterns("/api/auth/**"); // 예외 URL 설정 (ex: 로그인, 회원가입 API 제외)
+//        registry.addInterceptor(new ApiPrefixInterceptor())
+//                .addPathPatterns("/**") // 적용할 URL 패턴 지정
+//                .excludePathPatterns("/v3/api-docs/**", "/health", "/public/**", "/swagger-ui/**"); // 예외 URL 설정
     }
     // 3. resourceHandler(정적 파일 별도의 디렉터리)
     @Override

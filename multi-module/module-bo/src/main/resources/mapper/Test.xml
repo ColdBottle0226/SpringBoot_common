@@ -4,7 +4,7 @@
 <mapper namespace="com.project.module.bo.common.repository.TestMapper">
 
     <select id="selectZone" resultType="com.project.module.bo.common.model.TestModel">
-        SELECT ZONE_ID FROM tb_zone_mst
+        SELECT ZONE_ID FROM april.tb_zone_mst
     </select>
 
 </mapper>
