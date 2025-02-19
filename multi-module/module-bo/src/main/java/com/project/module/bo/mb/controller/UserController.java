@@ -22,7 +22,7 @@ import java.util.Optional;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/v1/user")
+@RequestMapping("/api/v1/user")
 @Tag(name = "Code-Controller", description = "Code 관리 API 엔드포인트")
 public class UserController {
     private final TestService testService;

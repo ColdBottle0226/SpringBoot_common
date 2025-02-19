@@ -59,11 +59,11 @@ public class GlobalExceptionHandler {
         }
         // 회원 관련 exception
         else if (e instanceof MemberException) {
-            log.error("handleException throw MemberException :");
+            log.error("handleException throw MemberException :", ((MemberException) e).getErrorCode());
             e.printStackTrace();
             return ErrorResponse.toResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR,
+                    ((MemberException) e).getErrorCode().getCode(),
                     ((MemberException) e).getErrorCode().getMessage());
-
         }
         // 유효성 검증 실패 exception
         else if (e instanceof MethodArgumentNotValidException) {
