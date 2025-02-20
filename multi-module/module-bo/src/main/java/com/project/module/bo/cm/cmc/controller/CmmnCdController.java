@@ -1,7 +1,9 @@
 package com.project.module.bo.cm.cmc.controller;
 
-import com.project.module.bo.cm.cmc.domain.dto.CmmnCdDto;
+import com.project.module.bo.cm.cmc.domain.so.CmmnCdSO;
+import com.project.module.bo.cm.cmc.domain.so.GrpCdSO;
 import com.project.module.bo.cm.cmc.domain.vo.CmmnCdVO;
+import com.project.module.bo.cm.cmc.domain.vo.GrpCdVO;
 import com.project.module.bo.cm.cmc.service.CmmnCdService;
 import com.project.module.common.core.model.CmmnResponseModel;
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,12 +35,19 @@ import java.util.List;
 public class CmmnCdController {
     @Autowired
     private CmmnCdService cmmnCdService;
-    
+
+    @Operation(summary = "그룹 코드 기본 목록", description = "그룹 코드 기본 조회")
+    @PostMapping("/grpCdList")
+    public ResponseEntity<CmmnResponseModel<List<GrpCdVO>>> selGrpCdList(@RequestBody GrpCdSO grpCdSO) {
+        // 공통 코드 기본 목록 조회
+        return new ResponseEntity<>(new CmmnResponseModel<>(cmmnCdService.selGrpCdList(grpCdSO)), HttpStatus.OK);
+    }
+
     @Operation(summary = "공통 코드 기본 목록", description = "공통 코드 기본 조회")
     @PostMapping("/cmmnCdList")
-    public ResponseEntity<CmmnResponseModel<List<CmmnCdVO>>> selCmmnCdList(@RequestBody CmmnCdDto cmmnCdDto) {
+    public ResponseEntity<CmmnResponseModel<List<CmmnCdVO>>> selCmmnCdList(@RequestBody CmmnCdSO cmmnCdSO) {
         // 공통 코드 기본 목록 조회
-        return new ResponseEntity<>(new CmmnResponseModel<>(cmmnCdService.selCmmnCdList(cmmnCdDto)), HttpStatus.OK);
+        return new ResponseEntity<>(new CmmnResponseModel<>(cmmnCdService.selCmmnCdList(cmmnCdSO)), HttpStatus.OK);
     }
 
 }

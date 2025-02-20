@@ -3,7 +3,37 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.module.bo.cm.cmc.repository.CmmnCdMapper">
 
-    <select id="selCmmnCdList" resultType="com.project.module.bo.cm.cmc.domain.vo.CmmnCdVO" >
+    <select id="selGrpCdList" resultType="com.project.module.bo.cm.cmc.domain.vo.GrpCdVO" parameterType="com.project.module.bo.cm.cmc.domain.so.GrpCdSO">
+        /* kr.co.daiso.bo.sm.smc.mapper.postgresql.CmmnCdMapper.selGrpCdList --그룹 코드 목록 조회*/
+        select
+        grp_cd  as grpCd/* 그룹코드 */
+        , job_lcl_cd /* 업무대분류코드 */
+        , grp_cd_nm /* 그룹코드명 */
+        , grp_cd_dc /* 그룹코드설명 */
+        , use_yn /* 사용여부 */
+        , fst_user_fd /* 첫번째사용자필드 */
+        , scd_user_fd /* 두번째사용자필드 */
+        , thd_user_fd /* 세번째사용자필드 */
+        , four_user_fd /* 네번째사용자필드 */
+        , ffth_user_fd /* 다섯번째사용자필드 */
+        , six_user_fd /* 여섯번째사용자필드 */
+--         , (row_number() over()) as rn /* 로우넘 -순번*/
+        from tb_cmmn_cd /* 그룹코드 */
+        where 1=1
+        <if test="grpCd!=null and !grpCd.equals('')">
+            and grp_cd like '%' || #{grpCd} || '%'
+        </if>
+        <if test="jobLclCd!=null and !jobLclCd.equals('')">
+            and job_lcl_cd = #{jobLclCd}
+        </if>
+        <if test="grpCdNm!=null and !grpCdNm.equals('')">
+            and grp_cd_nm like '%' || #{grpCdNm} || '%'
+        </if>
+        and use_yn = 'Y'
+        order by grp_cd asc
+    </select>
+
+    <select id="selCmmnCdList" resultType="com.project.module.bo.cm.cmc.domain.vo.CmmnCdVO" parameterType="com.project.module.bo.cm.cmc.domain.so.CmmnCdSO">
         /* CmmnCdMapper.selCmmnCdList -- 공통 코드 기본 목록 조회 */
         select a.grp_cd                        /* 그룹코드 */
         , a.job_lcl_cd                    /* 업무대분류코드 */

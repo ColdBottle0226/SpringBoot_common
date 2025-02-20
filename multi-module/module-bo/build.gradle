@@ -43,7 +43,13 @@ dependencies {
 //	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-batch'
+
+	// HikariCP (Spring Boot 기본 커넥션 풀)
+	implementation 'com.zaxxer:HikariCP:5.1.0'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+	// Spring Boot 트랜잭션 관리
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 

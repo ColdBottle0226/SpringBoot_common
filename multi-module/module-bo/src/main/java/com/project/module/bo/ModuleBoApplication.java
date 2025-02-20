@@ -1,6 +1,7 @@
 package com.project.module.bo;
 
 import com.project.module.common.core.config.BeanNameConfig;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;

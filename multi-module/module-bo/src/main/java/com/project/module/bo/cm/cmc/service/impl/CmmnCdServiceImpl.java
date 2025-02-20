@@ -1,16 +1,16 @@
 package com.project.module.bo.cm.cmc.service.impl;
 
-import com.project.module.bo.cm.cmc.domain.dto.CmmnCdDto;
+import com.project.module.bo.cm.cmc.domain.so.CmmnCdSO;
+import com.project.module.bo.cm.cmc.domain.so.GrpCdSO;
 import com.project.module.bo.cm.cmc.domain.vo.CmmnCdVO;
+import com.project.module.bo.cm.cmc.domain.vo.GrpCdVO;
 import com.project.module.bo.cm.cmc.repository.CmmnCdMapper;
 import com.project.module.bo.cm.cmc.service.CmmnCdService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * packageName    : com.project.module.bo.cm.cmc.service.impl
@@ -31,8 +31,13 @@ public class CmmnCdServiceImpl implements CmmnCdService {
     private final CmmnCdMapper cmmnCdMapper;
 
     @Override
-    public List<CmmnCdVO> selCmmnCdList(CmmnCdDto cmmnCdDto) {
+    public List<GrpCdVO> selGrpCdList(GrpCdSO grpCdSO) {
+        return cmmnCdMapper.selGrpCdList(grpCdSO);
+    }
 
-        return cmmnCdMapper.selCmmnCdList(cmmnCdDto);
+    @Override
+    public List<CmmnCdVO> selCmmnCdList(CmmnCdSO cmmnCdSO) {
+
+        return cmmnCdMapper.selCmmnCdList(cmmnCdSO);
     }
 }
