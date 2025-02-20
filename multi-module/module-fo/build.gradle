@@ -27,6 +27,13 @@ ext {
     set('springCloudVersion', "2024.0.0")
 }
 
+
+bootJar {
+    archiveFileName = 'module-fo.jar'
+}
+bootJar.enabled = true
+
+
 dependencies {
     // 기타 모듈 import
     implementation project(':module-common:core')

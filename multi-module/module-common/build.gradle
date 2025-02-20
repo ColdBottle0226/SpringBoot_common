@@ -19,6 +19,10 @@ configurations {
     }
 }
 
+tasks.named('bootJar') {
+    enabled = false
+}
+
 repositories {
     mavenCentral()
 }
