@@ -23,10 +23,10 @@ import lombok.Getter;
 @Schema(description = "공통 코드 VO")
 public class CmmnCdVO extends BaseModel {
 
-    @Schema(description = "그룹코드", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "그룹코드")
     private String grpCd;
 
-    @Schema(description = "업무대분류코드", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "업무대분류코드")
     private String jobLclCd;
 
     @Schema(description = "그룹코드명")
@@ -35,7 +35,7 @@ public class CmmnCdVO extends BaseModel {
     @Schema(description = "그룹코드설명")
     private String grpCdDc;
 
-    @Schema(description = "사용여부", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "사용여부")
     private String useYn;
 
     @Schema(description = "첫번째사용자필드")

@@ -1,31 +1,25 @@
-package com.project.module.bo.cm.cmc.domain.dto;
+package com.project.module.bo.cm.cmc.domain.po;
 
-import com.project.module.bo.cm.cmc.domain.vo.CmmnCdVO;
 import com.project.module.common.core.annotation.MaskingField;
-import com.project.module.common.core.model.CmmnPagingModel;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
- * packageName    : com.project.module.bo.cm.cmc.domain.dto
- * fileName       : CmmnCdDto
+ * packageName    : com.project.module.bo.cm.cmc.domain.po
+ * fileName       : CmmnCdPO
  * author         : 32339
- * date           : 2025-02-18
- * description    : DTO 는 VO와 달리 변형 가능하며, equals, hashCode를 재정의하지 않는다.
+ * date           : 2025-02-20
+ * description    :
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
- * 2025-02-18        32339       최초 생성
+ * 2025-02-20        32339       최초 생성
  */
 @Getter
 @Setter
-@Builder
-@Schema(description = "공통 코드 DTO", hidden = true)
-public class CmmnCdDto extends CmmnPagingModel {
-
+@Schema(description = "공통 코드 PO")
+public class CmmnCdPO {
     @Schema(description = "그룹코드", requiredMode = Schema.RequiredMode.REQUIRED)
     private String grpCd;
 
@@ -82,28 +76,15 @@ public class CmmnCdDto extends CmmnPagingModel {
     @MaskingField(MaskingField.MaskingType.NAME)
     private String lsUpdrNm;                /* 최종등록자명 */
 
+    @Schema(description = "최초등록자아이디", requiredMode = Schema.RequiredMode.REQUIRED)
+    private String frRgerId;
 
-    public static CmmnCdDto of(CmmnCdVO vo) {
-        return CmmnCdDto.builder()
-                .grpCd(vo.getGrpCd())
-                .jobLclCd(vo.getJobLclCd())
-                .grpCdNm(vo.getGrpCdNm())
-                .grpCdDc(vo.getGrpCdDc())
-                .useYn(vo.getUseYn())
-                .fstUserFd(vo.getFstUserFd())
-                .scdUserFd(vo.getScdUserFd())
-                .thdUserFd(vo.getThdUserFd())
-                .fourUserFd(vo.getFourUserFd())
-                .ffthUserFd(vo.getFfthUserFd())
-                .sixUserFd(vo.getSixUserFd())
-                .cmmnCd(vo.getCmmnCd())
-                .cmmnCdNm(vo.getCmmnCdNm())
-                .cmmnCdDc(vo.getCmmnCdDc())
-                .lowCmmnCd(vo.getLowCmmnCd())
-                .sortOrdr(vo.getSortOrdr())
-                .frRgerNm(vo.getFrRgerNm())
-                .lsUpdrNm(vo.getLsUpdrNm())
-                .build();
-    }
+    @Schema(description = "최초등록일시", requiredMode = Schema.RequiredMode.REQUIRED)
+    private String frRgDtm;
 
+    @Schema(description = "최종수정자아이디", requiredMode = Schema.RequiredMode.REQUIRED)
+    private String lsUpdrId;
+
+    @Schema(description = "최종수정일시", requiredMode = Schema.RequiredMode.REQUIRED)
+    private String lsUpdtDtm;
 }

@@ -8,6 +8,7 @@ import java.io.Serializable;
 public class BaseModel implements Serializable {
     private static final long serialVersionUID = -5767508192561569865L;
 
+
     private String rgpsId;
     private String regDttm;
 

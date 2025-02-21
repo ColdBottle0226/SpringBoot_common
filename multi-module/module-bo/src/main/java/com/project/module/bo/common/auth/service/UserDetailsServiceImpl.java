@@ -34,6 +34,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String userId) {
 
+        if (userService == null) {
+            throw new IllegalStateException("userService가 주입되지 않았습니다!");
+        }
+
         // [STEP1] 사용자 아이디를 조회하여 존재하지 않는 경우 오류를 반환한다.
         if (userId == null || userId.isEmpty()) {
             throw new AuthenticationServiceException("사용자 ID가 비어있습니다.");

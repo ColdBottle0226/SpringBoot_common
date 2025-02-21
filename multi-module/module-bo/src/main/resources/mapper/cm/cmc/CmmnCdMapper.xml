@@ -3,8 +3,38 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.module.bo.cm.cmc.repository.CmmnCdMapper">
 
-    <select id="selCmmnCdList" resultType="com.project.module.bo.cm.cmc.domain.vo.CmmnCdVO" >
-        /* CmmnCdMapper.selCmmnCdList -- 공통 코드 기본 목록 조회 */
+    <!-- 그룹 코드 목록 조회   -->
+    <select id="selGrpCdList" resultType="com.project.module.bo.cm.cmc.domain.vo.GrpCdVO" parameterType="com.project.module.bo.cm.cmc.domain.so.GrpCdSO">
+        select
+        grp_cd  /* 그룹코드 */
+        , job_lcl_cd /* 업무대분류코드 */
+        , grp_cd_nm /* 그룹코드명 */
+        , grp_cd_dc /* 그룹코드설명 */
+        , use_yn /* 사용여부 */
+        , fst_user_fd /* 첫번째사용자필드 */
+        , scd_user_fd /* 두번째사용자필드 */
+        , thd_user_fd /* 세번째사용자필드 */
+        , four_user_fd /* 네번째사용자필드 */
+        , ffth_user_fd /* 다섯번째사용자필드 */
+        , six_user_fd /* 여섯번째사용자필드 */
+--         , (row_number() over()) as rn /* 로우넘 -순번*/
+        from tb_cmmn_cd /* 그룹코드 */
+        where 1=1
+        <if test="grpCd!=null and !grpCd.equals('')">
+            and grp_cd like '%' || #{grpCd} || '%'
+        </if>
+        <if test="jobLclCd!=null and !jobLclCd.equals('')">
+            and job_lcl_cd = #{jobLclCd}
+        </if>
+        <if test="grpCdNm!=null and !grpCdNm.equals('')">
+            and grp_cd_nm like '%' || #{grpCdNm} || '%'
+        </if>
+        and use_yn = 'Y'
+        order by grp_cd asc
+    </select>
+
+    <!-- 공통 코드 목록 조회   -->
+    <select id="selCmmnCdList" resultType="com.project.module.bo.cm.cmc.domain.vo.CmmnCdVO" parameterType="com.project.module.bo.cm.cmc.domain.so.CmmnCdSO">
         select a.grp_cd                        /* 그룹코드 */
         , a.job_lcl_cd                    /* 업무대분류코드 */
         , a.grp_cd_nm                     /* 그룹코드명 */
@@ -20,7 +50,7 @@
         , DATE_FORMAT(a.fr_rg_dtm, '%Y-%m-%d %H:%i:%s') as fr_rg_dtm /* 최초등록일시 */
         , a.ls_updr_id                    /* 최종수정자아이디 */
         , DATE_FORMAT(a.fr_rg_dtm, '%Y-%m-%d %H:%i:%s') as ls_updt_dtm /* 최종수정일시 */
-        from tb_cmmn_cd a               /* 공통코드 */
+        from tb_cmmn_cd_detail a               /* 공통코드 */
         where 1=1
         <if test="grpCd != null and !grpCd.equals('')">
             and (a.grp_cd like CONCAT('%', #{grpCd}, '%') or a.grp_cd_nm like CONCAT('%', #{grpCd}, '%'))
@@ -33,6 +63,65 @@
         </if>
         order by a.grp_cd
     </select>
+
+    <!-- 공통 코드 상세 목록조회   -->
+    <select id="selCmmnCdDetailList" parameterType="com.project.module.bo.cm.cmc.domain.so.CmmnCdSO" resultType="com.project.module.bo.cm.cmc.domain.vo.CmmnCdVO" >
+        select grp_cd /* 그룹코드 */
+        , cmmn_cd /* 공통코드 */
+        , cmmn_cd_nm /* 공통코드명 */
+        , low_cmmn_cd /* 하위공통코드그룹코드 */
+        from tb_cmmn_cd_detail /* 공통코드 */
+        where 1=1
+        <choose>
+            <when test="grpCdList != null and grpCdList.size > 0">
+                and grp_cd in
+                <foreach collection="grpCdList" item="item" separator=","
+                         open="(" close=")">
+                    #{item}
+                </foreach>
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+        order by sort_ordr asc
+    </select>
+
+    <insert id="insGrpCd" parameterType="com.project.module.bo.cm.cmc.domain.po.GrpCdPO">
+        insert into tb_cmmn_cd
+        ( grp_cd /* 그룹코드 */
+        , job_lcl_cd /* 업무대분류코드 */
+        , grp_cd_nm /* 그룹코드명 */
+        , grp_cd_dc /* 그룹코드설명 */
+        , use_yn /* 사용여부 */
+        , fst_user_fd /* 첫번째사용자필드 */
+        , scd_user_fd /* 두번째사용자필드 */
+        , thd_user_fd /* 세번째사용자필드 */
+        , four_user_fd /* 네번째사용자필드 */
+        , ffth_user_fd /* 다섯번째사용자필드 */
+        , six_user_fd /* 여섯번째사용자필드 */
+        , fr_rger_id /* 최초등록자아이디 */
+        , fr_rg_dtm /* 최초등록일시 */
+        , ls_updr_id /* 최종수정자아이디 */
+        , ls_updt_dtm /* 최종수정일시 */
+        )
+        values
+            ( #{grpCd}
+            , #{jobLclCd} /* 업무대분류코드 */
+            , #{grpCdNm} /* 그룹코드명 */
+            , #{grpCdDc} /* 그룹코드설명 */
+            , 'Y' /* 사용여부 */
+            , #{fstUserFd} /* 첫번째사용자필드 */
+            , #{scdUserFd} /* 두번째사용자필드 */
+            , #{thdUserFd} /* 세번째사용자필드 */
+            , #{fourUserFd} /* 네번째사용자필드 */
+            , #{ffthUserFd} /* 다섯번째사용자필드 */
+            , #{sixUserFd} /* 여섯번째사용자필드 */
+            , #{frRgerId} /* 최초등록자아이디 */
+            , now() /* 최초등록일시 */
+            , #{lsUpdrId} /* 최종수정자아이디 */
+            , now() /* 최종수정일시 */
+            )
+    </insert>
 
 </mapper>
 

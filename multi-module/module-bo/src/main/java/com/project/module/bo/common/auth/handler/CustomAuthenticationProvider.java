@@ -43,8 +43,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 //        if (!(userDetailsDto.getUserPw().equalsIgnoreCase(userPw))) {
 //            throw new BadCredentialsException(userDetailsDto.getUserName() + "Invalid password");
 //        }
-        if (!passwordEncoder.matches(userPw, userDetailsDto.getUserPw())) {
-            throw new BadCredentialsException("Invalid password for user: " + userDetailsDto.getUserName());
+        if (!passwordEncoder.matches(userPw, userDetailsDto.getPassword())) {
+            throw new BadCredentialsException("Invalid password for user: " + userDetailsDto.getUsername());
         }
         // 인증이 성공하면 인증된 사용자의 정보와 권한을 담은 새로운 UsernamePasswordAuthenticationToken을 반환
         return new UsernamePasswordAuthenticationToken(userDetailsDto, userPw, userDetailsDto.getAuthorities());
