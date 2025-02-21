@@ -4,9 +4,12 @@ import com.project.module.bo.cm.cmc.domain.vo.CmmnCdVO;
 import com.project.module.common.core.annotation.MaskingField;
 import com.project.module.common.core.model.CmmnPagingModel;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 /**
  * packageName    : com.project.module.bo.cm.cmc.domain.so
@@ -25,6 +28,10 @@ import lombok.Setter;
 @Schema(description = "공통 코드 SO", hidden = true)
 public class CmmnCdSO extends CmmnPagingModel {
 
+    @Schema(description = "그룹코드리스트" )
+    private List<String> grpCdList;
+
+    @NotNull(message = "그룹코드는 필수입니다.")
     @Schema(description = "그룹코드", requiredMode = Schema.RequiredMode.REQUIRED)
     private String grpCd;
 

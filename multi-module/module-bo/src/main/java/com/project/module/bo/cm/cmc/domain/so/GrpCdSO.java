@@ -34,4 +34,6 @@ public class GrpCdSO extends CmmnPagingModel {
     @Schema(description = "사용여부", requiredMode = Schema.RequiredMode.REQUIRED)
     private String useYn;
 
+
+
 }

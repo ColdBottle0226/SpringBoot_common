@@ -1,5 +1,6 @@
 package com.project.module.bo.cm.cmc.controller;
 
+import com.project.module.bo.cm.cmc.domain.po.GrpCdPO;
 import com.project.module.bo.cm.cmc.domain.so.CmmnCdSO;
 import com.project.module.bo.cm.cmc.domain.so.GrpCdSO;
 import com.project.module.bo.cm.cmc.domain.vo.CmmnCdVO;
@@ -8,6 +9,7 @@ import com.project.module.bo.cm.cmc.service.CmmnCdService;
 import com.project.module.common.core.model.CmmnResponseModel;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,12 +44,29 @@ public class CmmnCdController {
         // 공통 코드 기본 목록 조회
         return new ResponseEntity<>(new CmmnResponseModel<>(cmmnCdService.selGrpCdList(grpCdSO)), HttpStatus.OK);
     }
+    
+    @Operation(summary = "그룹 코드 등록", description = "그룹 코드 등록")
+    @PostMapping("/insGrpCd")
+    public ResponseEntity<CmmnResponseModel> insGrpCd(@RequestBody @Valid GrpCdPO grpCdPO) {
+
+        cmmnCdService.insGrpCd(grpCdPO);
+
+        // 공통 코드 등록
+        return new ResponseEntity<>(new CmmnResponseModel<>(true, "그룹코드가 정상 등록되었습니다."), HttpStatus.OK);
+    }
 
     @Operation(summary = "공통 코드 기본 목록", description = "공통 코드 기본 조회")
     @PostMapping("/cmmnCdList")
     public ResponseEntity<CmmnResponseModel<List<CmmnCdVO>>> selCmmnCdList(@RequestBody CmmnCdSO cmmnCdSO) {
         // 공통 코드 기본 목록 조회
         return new ResponseEntity<>(new CmmnResponseModel<>(cmmnCdService.selCmmnCdList(cmmnCdSO)), HttpStatus.OK);
+    }
+
+    @Operation(summary = "공통 코드 상세 목록", description = "공통 코드 상세 조회")
+    @PostMapping("/cmmnCdDetailList")
+    public ResponseEntity<CmmnResponseModel<List<CmmnCdVO>>> selCmmnCdDetailList(@RequestBody @Valid CmmnCdSO cmmnCdSO) {
+        // 공통 코드 상세 목록 조회
+        return new ResponseEntity<>(new CmmnResponseModel<>(cmmnCdService.selCmmnCdDetailList(cmmnCdSO)), HttpStatus.OK);
     }
 
 }

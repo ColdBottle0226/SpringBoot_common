@@ -1,5 +1,6 @@
 package com.project.module.bo.cm.cmc.service.impl;
 
+import com.project.module.bo.cm.cmc.domain.po.GrpCdPO;
 import com.project.module.bo.cm.cmc.domain.so.CmmnCdSO;
 import com.project.module.bo.cm.cmc.domain.so.GrpCdSO;
 import com.project.module.bo.cm.cmc.domain.vo.CmmnCdVO;
@@ -36,8 +37,20 @@ public class CmmnCdServiceImpl implements CmmnCdService {
     }
 
     @Override
+    public void insGrpCd(GrpCdPO grpCdPO) {
+        cmmnCdMapper.insGrpCd(grpCdPO);
+    }
+
+    @Override
     public List<CmmnCdVO> selCmmnCdList(CmmnCdSO cmmnCdSO) {
 
         return cmmnCdMapper.selCmmnCdList(cmmnCdSO);
     }
+
+    @Override
+    public List<CmmnCdVO> selCmmnCdDetailList(CmmnCdSO cmmnCdSO) {
+        return cmmnCdMapper.selCmmnCdDetailList(cmmnCdSO);
+    }
+
+
 }
