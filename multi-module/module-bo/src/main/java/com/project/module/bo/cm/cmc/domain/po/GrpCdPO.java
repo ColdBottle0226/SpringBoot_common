@@ -1,9 +1,11 @@
 package com.project.module.bo.cm.cmc.domain.po;
 
+import com.project.module.bo.mb.domain.dto.UserDto;
 import com.project.module.common.core.annotation.MaskingField;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,7 +21,7 @@ import lombok.Setter;
  * 2025-02-20        32339       최초 생성
  */
 @Getter
-@Setter
+@Builder
 @Schema(description = "그룹 코드 PO")
 public class GrpCdPO {
     @Schema(description = "그룹코드", requiredMode = Schema.RequiredMode.REQUIRED)
@@ -67,4 +69,25 @@ public class GrpCdPO {
     @MaskingField(MaskingField.MaskingType.NAME)
     private String lsUpdrId;                /* 최종등록자명 */
 
+    /**
+     * UserDto 기반으로 GrpCdPO 생성
+     */
+    public static GrpCdPO applyAuth(GrpCdPO po, UserDto userDto) {
+        return GrpCdPO.builder()
+                .grpCd(po.getGrpCd())
+                .jobLclCd(po.getJobLclCd())
+                .grpCdNm(po.getGrpCdNm())
+                .grpCdDc(po.getGrpCdDc())
+                .useYn(po.getUseYn())
+                .fstUserFd(po.getFstUserFd())
+                .scdUserFd(po.getScdUserFd())
+                .thdUserFd(po.getThdUserFd())
+                .fourUserFd(po.getFourUserFd())
+                .ffthUserFd(po.getFfthUserFd())
+                .sixUserFd(po.getSixUserFd())
+                .frRgerId(userDto.getUserId()) // 최초 등록자 자동 설정
+                .lsUpdrId(userDto.getUserId()) // 최종 수정자 자동 설정
+                .build();
+    }
 }
+

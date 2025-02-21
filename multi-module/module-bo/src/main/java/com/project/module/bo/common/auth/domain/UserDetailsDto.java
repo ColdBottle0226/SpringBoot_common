@@ -15,8 +15,7 @@ import java.util.Collection;
 @AllArgsConstructor
 public class UserDetailsDto implements UserDetails {
 
-    @Delegate
-    private UserDto userDto;
+    private final UserDto userDto;
 
     private Collection<? extends GrantedAuthority> authorities;
 

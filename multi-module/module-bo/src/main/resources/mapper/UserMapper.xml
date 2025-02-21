@@ -18,7 +18,7 @@
 
     <select id="findByUserId" resultType="com.project.module.bo.mb.domain.dto.UserDto">
         SELECT USER_ID, USER_NAME, USER_SEQ, USER_PW
-        FROM april.tb_user_mst
+        FROM tb_user_mst
         WHERE USER_ID = #{userId}
     </select>
 

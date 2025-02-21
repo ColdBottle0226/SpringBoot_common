@@ -1,6 +1,7 @@
 package com.project.module.bo.common.handler;
 
 import com.project.module.common.core.exception.CommonException;
+import com.project.module.common.core.exception.CustomException;
 import com.project.module.common.core.exception.ErrorResponse;
 import com.project.module.bo.mb.exception.MemberException;
 import lombok.RequiredArgsConstructor;
@@ -72,31 +73,34 @@ public class GlobalExceptionHandler {
                     ((MemberException) e).getErrorCode().getCode(),
                     ((MemberException) e).getErrorCode().getMessage());
         }
-        // 유효성 검증 실패 exception
-        else if (e instanceof MethodArgumentNotValidException) {
-            log.error("handleException throw MethodArgumentNotValidException :");
-            e.printStackTrace();
-            return ErrorResponse.toResponseEntity(HttpStatus.BAD_REQUEST,
-                    e.getCause().toString());
-        }
         // Custom Exception
-        else {
-
-            log.error(" Another Exception : {}", e);
-            log.error(" Another Exception Cause : {}", e.getCause().toString());
-            StackTraceElement[] ste = e.getStackTrace();
-            String className = ste[0].getClassName();
-            String methodName = ste[0].getMethodName();
-            int lineNumber = ste[0].getLineNumber();
-            String fileName = ste[0].getFileName();
-            log.error("### " + className + "." + methodName + "###");
-            log.error("# FileName : " + fileName);
-            log.error("# LineNumber : " + lineNumber);
-            e.printStackTrace();
-        }
+//        else {
+//            log.error(" Another Exception : {}", e);
+//            log.error(" Another Exception Cause : {}", e.getCause().toString());
+//            StackTraceElement[] ste = e.getStackTrace();
+//            String className = ste[0].getClassName();
+//            String methodName = ste[0].getMethodName();
+//            int lineNumber = ste[0].getLineNumber();
+//            String fileName = ste[0].getFileName();
+//            log.error("### " + className + "." + methodName + "###");
+//            log.error("# FileName : " + fileName);
+//            log.error("# LineNumber : " + lineNumber);
+//            e.printStackTrace();
+//        }
 
         return ErrorResponse.toResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR,
                 e.getCause().toString());
+    }
+
+    /**
+     * Custom Exception 핸들러
+     * @param e
+     * @return
+     * @throws Exception
+     */
+    @ExceptionHandler(value = {CustomException.class})
+    protected ResponseEntity<?> handleCustomException(CustomException e) throws Exception {
+        return ErrorResponse.toResponseEntity(HttpStatus.OK, e.getMessage(), e.getArgs());
     }
 
     /**

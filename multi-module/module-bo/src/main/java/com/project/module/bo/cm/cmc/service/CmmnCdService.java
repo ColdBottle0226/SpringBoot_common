@@ -5,6 +5,7 @@ import com.project.module.bo.cm.cmc.domain.so.CmmnCdSO;
 import com.project.module.bo.cm.cmc.domain.so.GrpCdSO;
 import com.project.module.bo.cm.cmc.domain.vo.CmmnCdVO;
 import com.project.module.bo.cm.cmc.domain.vo.GrpCdVO;
+import com.project.module.bo.mb.domain.dto.UserDto;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ public interface CmmnCdService {
     List<GrpCdVO> selGrpCdList(GrpCdSO grpCdSO);
 
     // 그룹 코드 등록
-    void insGrpCd(GrpCdPO grpCdPO);
+    void insGrpCd(GrpCdPO grpCdPO, UserDto userDto);
 
     // 공통 코드 기본 목록 조회
     List<CmmnCdVO> selCmmnCdList(CmmnCdSO cmmnCdSO);

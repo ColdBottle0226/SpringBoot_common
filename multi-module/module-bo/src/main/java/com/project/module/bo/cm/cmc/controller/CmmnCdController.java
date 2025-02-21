@@ -6,6 +6,8 @@ import com.project.module.bo.cm.cmc.domain.so.GrpCdSO;
 import com.project.module.bo.cm.cmc.domain.vo.CmmnCdVO;
 import com.project.module.bo.cm.cmc.domain.vo.GrpCdVO;
 import com.project.module.bo.cm.cmc.service.CmmnCdService;
+import com.project.module.bo.common.auth.annotation.AuthUser;
+import com.project.module.bo.mb.domain.dto.UserDto;
 import com.project.module.common.core.model.CmmnResponseModel;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -47,9 +49,9 @@ public class CmmnCdController {
     
     @Operation(summary = "그룹 코드 등록", description = "그룹 코드 등록")
     @PostMapping("/insGrpCd")
-    public ResponseEntity<CmmnResponseModel> insGrpCd(@RequestBody @Valid GrpCdPO grpCdPO) {
+    public ResponseEntity<CmmnResponseModel> insGrpCd(@RequestBody @Valid GrpCdPO grpCdPO, @AuthUser UserDto userDto) {
 
-        cmmnCdService.insGrpCd(grpCdPO);
+        cmmnCdService.insGrpCd(grpCdPO, userDto);
 
         // 공통 코드 등록
         return new ResponseEntity<>(new CmmnResponseModel<>(true, "그룹코드가 정상 등록되었습니다."), HttpStatus.OK);
