@@ -33,35 +33,36 @@
         order by grp_cd asc
     </select>
 
+    <!--  그룹코드 존재 여부/useYn 확인  -->
+    <select id="checkGrpCodeAndUseYn" resultType="com.project.module.bo.cm.cmc.domain.vo.GrpCdVO">
+        SELECT COUNT(*) AS totalCnt, MAX(use_yn) AS useYn
+        FROM tb_cmmn_cd
+        WHERE grp_cd = #{grpCd}
+    </select>
+
     <!-- 공통 코드 목록 조회   -->
     <select id="selCmmnCdList" resultType="com.project.module.bo.cm.cmc.domain.vo.CmmnCdVO" parameterType="com.project.module.bo.cm.cmc.domain.so.CmmnCdSO">
-        select a.grp_cd                        /* 그룹코드 */
-        , a.job_lcl_cd                    /* 업무대분류코드 */
-        , a.grp_cd_nm                     /* 그룹코드명 */
-        , a.grp_cd_dc                     /* 그룹코드설명 */
-        , a.use_yn                        /* 사용여부 */
-        , a.fst_user_fd                   /* 첫번째사용자필드 */
-        , a.scd_user_fd                   /* 두번째사용자필드 */
-        , a.thd_user_fd                   /* 세번째사용자필드 */
-        , a.four_user_fd                  /* 네번째사용자필드 */
-        , a.ffth_user_fd                  /* 다섯번째사용자필드 */
-        , a.six_user_fd                   /* 여섯번째사용자필드 */
-        , a.fr_rger_id                    /* 최초등록자아이디 */
-        , DATE_FORMAT(a.fr_rg_dtm, '%Y-%m-%d %H:%i:%s') as fr_rg_dtm /* 최초등록일시 */
-        , a.ls_updr_id                    /* 최종수정자아이디 */
-        , DATE_FORMAT(a.fr_rg_dtm, '%Y-%m-%d %H:%i:%s') as ls_updt_dtm /* 최종수정일시 */
-        from tb_cmmn_cd_detail a               /* 공통코드 */
-        where 1=1
-        <if test="grpCd != null and !grpCd.equals('')">
-            and (a.grp_cd like CONCAT('%', #{grpCd}, '%') or a.grp_cd_nm like CONCAT('%', #{grpCd}, '%'))
-        </if>
-        <if test="jobLclCd != null and !jobLclCd.equals('')">
-            and a.job_lcl_cd = #{jobLclCd}
-        </if>
-        <if test="useYn != null and !useYn.equals('')">
-            and a.use_yn = #{useYn}
-        </if>
-        order by a.grp_cd
+        		select grp_cd /* 그룹코드 */
+        			 , cmmn_cd /* 공통코드 */
+        			 , cmmn_cd_nm /* 공통코드명 */
+        			 , cmmn_cd_dc /* 공통코드설명*/
+        			 , low_cmmn_cd /* 하위공통코드 */
+        			 , sort_ordr /* 정렬순서 */
+        			 , use_yn /* 사용여부 */
+        			 , fst_user_fd /* 첫번째사용자필드 */
+        			 , scd_user_fd /* 두번째사용자필드 */
+        			 , thd_user_fd /* 세번째사용자필드 */
+        			 , four_user_fd /* 네번째사용자필드 */
+        			 , ffth_user_fd /* 다섯번째사용자필드 */
+        			 , six_user_fd_dtm /* 여섯번째사용자필드 */
+        			 , fr_rger_id /* 최초등록자아이디 */
+        			 , fr_rg_dtm /* 최초등록일시 */
+        			 , ls_updr_id /* 최종수정자아이디 */
+        			 , ls_updt_dtm /* 최종수정일시 */
+        		 from tb_cmmn_cd_detail /* 공통코드 */
+        		where 1=1
+        		  and grp_cd = #{grpCd}
+        		order by sort_ordr asc
     </select>
 
     <!-- 공통 코드 상세 목록조회   -->
@@ -86,19 +87,22 @@
         order by sort_ordr asc
     </select>
 
+    <!-- 그룹코드 등록   -->
     <insert id="insGrpCd" parameterType="com.project.module.bo.cm.cmc.domain.po.GrpCdPO">
         insert into tb_cmmn_cd
         ( grp_cd /* 그룹코드 */
-        , job_lcl_cd /* 업무대분류코드 */
-        , grp_cd_nm /* 그룹코드명 */
-        , grp_cd_dc /* 그룹코드설명 */
+        , cmmn_cd /* 공통코드 */
+        , cmmn_cd_nm /* 공통코드명 */
+        , cmmn_cd_dc /* 공통코드설명*/
+        , low_cmmn_cd /* 하위공통코드 */
+        , sort_ordr /* 정렬순서 */
         , use_yn /* 사용여부 */
         , fst_user_fd /* 첫번째사용자필드 */
         , scd_user_fd /* 두번째사용자필드 */
         , thd_user_fd /* 세번째사용자필드 */
         , four_user_fd /* 네번째사용자필드 */
         , ffth_user_fd /* 다섯번째사용자필드 */
-        , six_user_fd /* 여섯번째사용자필드 */
+        , six_user_fd_dtm /* 여섯번째사용자필드 */
         , fr_rger_id /* 최초등록자아이디 */
         , fr_rg_dtm /* 최초등록일시 */
         , ls_updr_id /* 최종수정자아이디 */
@@ -106,8 +110,13 @@
         )
         values
             ( #{grpCd}
-            , #{jobLclCd} /* 업무대분류코드 */
-            , #{grpCdNm} /* 그룹코드명 */
+            , #{cmmnCd} /* 공통코드 */
+            , #{cmmnCdNm} /* 공통코드명 */
+            , #{cmmn_cd_dc} /* 그룹코드명 */
+            , #{low_cmmn_cd} /* 그룹코드명 */
+            , #{sort_ordr} /* 그룹코드명 */
+            , #{use_yn} /* 그룹코드명 */
+
             , #{grpCdDc} /* 그룹코드설명 */
             , 'Y' /* 사용여부 */
             , #{fstUserFd} /* 첫번째사용자필드 */
@@ -122,6 +131,56 @@
             , now() /* 최종수정일시 */
             )
     </insert>
+
+    <!-- 공통코드 등록   -->
+    <insert id="insCmmnCd">
+        <!-- 정렬순서(sort_ordr) 값 설정 -->
+        <selectKey keyProperty="sortOrdr" resultType="int" order="BEFORE">
+            SELECT COALESCE(MAX(sort_ordr) + 1, 1)
+            FROM tb_cmmn_cd
+            WHERE grp_cd = #{grpCd}
+        </selectKey>
+
+        <!-- 공통코드 INSERT -->
+        insert into tb_cmmn_cd_detail (
+            grp_cd
+            , cmmn_cd
+            , cmmn_cd_nm
+            , cmmn_cd_dc
+            , low_cmmn_cd
+            , sort_ordr
+            , use_yn
+            , fst_user_fd
+            , scd_user_fd
+            , thd_user_fd
+            , four_user_fd
+            , ffth_user_fd
+            , six_user_fd
+            , fr_rger_id
+            , fr_rg_dtm
+            , ls_updr_id
+            , ls_updt_dtm
+        ) VALUES (
+            #{grpCd}
+            , #{cmmnCd}
+            , #{cmmnCdNm}
+            , #{cmmnCdDc}
+            , #{lowCmmnCd}
+            , #{sortOrdr}
+            , "Y"
+            , #{fstUserFd}
+            , #{scdUserFd}
+            , #{thdUserFd}
+            , #{fourUserFd}
+            , #{ffthUserFd}
+            , #{sixUserFd}
+            , #{frRgerId}
+            , NOW()
+            , #{lsUpdrId}
+            , NOW()
+        )
+    </insert>
+
 
 </mapper>
 

@@ -1,5 +1,6 @@
 package com.project.module.bo.common.handler;
 
+import com.project.module.bo.cm.cmc.exception.CMExcpetion;
 import com.project.module.common.core.exception.CommonException;
 import com.project.module.common.core.exception.CustomException;
 import com.project.module.common.core.exception.ErrorResponse;
@@ -65,13 +66,18 @@ public class GlobalExceptionHandler {
             return ErrorResponse.toResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR,
                     e.getCause().toString());
         }
-        // 회원 관련 exception
+        // custom한 exception
         else if (e instanceof MemberException) {
-            log.error("handleException throw MemberException :", ((MemberException) e).getErrorCode());
+            log.error("handleException throw :", e.getMessage());
             e.printStackTrace();
             return ErrorResponse.toResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR,
                     ((MemberException) e).getErrorCode().getCode(),
                     ((MemberException) e).getErrorCode().getMessage());
+        } else if (e instanceof CMExcpetion) {
+            log.error("handleException throw :", e.getMessage());
+            e.printStackTrace();
+            return ErrorResponse.toResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR,
+                    ((CMExcpetion) e).getErrorCode().getCode());
         }
         // Custom Exception
 //        else {

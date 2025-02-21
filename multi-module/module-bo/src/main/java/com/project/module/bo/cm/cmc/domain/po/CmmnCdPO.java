@@ -1,7 +1,9 @@
 package com.project.module.bo.cm.cmc.domain.po;
 
+import com.project.module.bo.mb.domain.dto.UserDto;
 import com.project.module.common.core.annotation.MaskingField;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,22 +19,25 @@ import lombok.Setter;
  * 2025-02-20        32339       최초 생성
  */
 @Getter
-@Setter
+@Builder
 @Schema(description = "공통 코드 PO")
 public class CmmnCdPO {
     @Schema(description = "그룹코드", requiredMode = Schema.RequiredMode.REQUIRED)
     private String grpCd;
 
-    @Schema(description = "업무대분류코드", requiredMode = Schema.RequiredMode.REQUIRED)
-    private String jobLclCd;
+    @Schema(description = "공통코드", requiredMode = Schema.RequiredMode.REQUIRED)
+    private String cmmnCd;
 
-    @Schema(description = "그룹코드명")
-    private String grpCdNm;
+    @Schema(description = "공통코드명")
+    private String cmmnCdNm;
 
-    @Schema(description = "그룹코드설명")
-    private String grpCdDc;
+    @Schema(description = "공통코드설명")
+    private String cmmnCdDc;
 
-    @Schema(description = "사용여부", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "사용순서")
+    private String sortOrdr;
+
+    @Schema(description = "사용여부")
     private String useYn;
 
     @Schema(description = "첫번째사용자필드")
@@ -53,29 +58,6 @@ public class CmmnCdPO {
     @Schema(description = "여섯번째사용자필드")
     private String sixUserFd;
 
-    @Schema(description = "공통코드")
-    private String cmmnCd;
-
-    @Schema(description = "공통코드명")
-    private String cmmnCdNm;
-
-    @Schema(description = "공통코드설명")
-    private String cmmnCdDc;
-
-    @Schema(description = "하위공통코드")
-    private String lowCmmnCd;
-
-    @Schema(description = "정렬순서")
-    private int sortOrdr;
-
-    @Schema(description = "최초등록자명")
-    @MaskingField(MaskingField.MaskingType.NAME)
-    private String frRgerNm;                /* 최초등록자명 */
-
-    @Schema(description = "최종등록자명")
-    @MaskingField(MaskingField.MaskingType.NAME)
-    private String lsUpdrNm;                /* 최종등록자명 */
-
     @Schema(description = "최초등록자아이디", requiredMode = Schema.RequiredMode.REQUIRED)
     private String frRgerId;
 
@@ -87,4 +69,26 @@ public class CmmnCdPO {
 
     @Schema(description = "최종수정일시", requiredMode = Schema.RequiredMode.REQUIRED)
     private String lsUpdtDtm;
+
+    /**
+     * UserDto 기반으로 CmmnCdPO 생성
+     */
+    public static CmmnCdPO applyAuth(CmmnCdPO po, UserDto userDto) {
+        return CmmnCdPO.builder()
+                .grpCd(po.getGrpCd())
+                .cmmnCd(po.getCmmnCd())
+                .cmmnCdNm(po.getCmmnCdNm())
+                .cmmnCdDc(po.getCmmnCdDc())
+                .sortOrdr(po.getSortOrdr())
+                .useYn(po.getUseYn())
+                .fstUserFd(po.getFstUserFd())
+                .scdUserFd(po.getScdUserFd())
+                .thdUserFd(po.getThdUserFd())
+                .fourUserFd(po.getFourUserFd())
+                .ffthUserFd(po.getFfthUserFd())
+                .sixUserFd(po.getSixUserFd())
+                .frRgerId(userDto.getUserId()) // 최초 등록자 자동 설정
+                .lsUpdrId(userDto.getUserId()) // 최종 수정자 자동 설정
+                .build();
+    }
 }

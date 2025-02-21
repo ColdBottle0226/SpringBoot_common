@@ -1,10 +1,13 @@
 package com.project.module.common.core.model;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
  * BO 공통 데이터 모델
  */
+@Data
 public class BaseModel implements Serializable {
     private static final long serialVersionUID = -5767508192561569865L;
 

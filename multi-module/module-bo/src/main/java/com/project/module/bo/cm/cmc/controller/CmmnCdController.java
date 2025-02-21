@@ -1,5 +1,6 @@
 package com.project.module.bo.cm.cmc.controller;
 
+import com.project.module.bo.cm.cmc.domain.po.CmmnCdPO;
 import com.project.module.bo.cm.cmc.domain.po.GrpCdPO;
 import com.project.module.bo.cm.cmc.domain.so.CmmnCdSO;
 import com.project.module.bo.cm.cmc.domain.so.GrpCdSO;
@@ -57,11 +58,21 @@ public class CmmnCdController {
         return new ResponseEntity<>(new CmmnResponseModel<>(true, "그룹코드가 정상 등록되었습니다."), HttpStatus.OK);
     }
 
-    @Operation(summary = "공통 코드 기본 목록", description = "공통 코드 기본 조회")
+    @Operation(summary = "공통 코드 기본 목록", description = "공통 코드 목록 조회")
     @PostMapping("/cmmnCdList")
     public ResponseEntity<CmmnResponseModel<List<CmmnCdVO>>> selCmmnCdList(@RequestBody CmmnCdSO cmmnCdSO) {
         // 공통 코드 기본 목록 조회
         return new ResponseEntity<>(new CmmnResponseModel<>(cmmnCdService.selCmmnCdList(cmmnCdSO)), HttpStatus.OK);
+    }
+
+    @Operation(summary = "공통 코드 등록", description = "공통 코드 등록")
+    @PostMapping("/insCmmnCd")
+    public ResponseEntity<CmmnResponseModel> insCmmnCd(@RequestBody @Valid CmmnCdPO cmmnCdPO, @AuthUser UserDto userDto) {
+
+        cmmnCdService.insCmmnCd(cmmnCdPO, userDto);
+
+        // 공통 코드 등록
+        return new ResponseEntity<>(new CmmnResponseModel<>(true, "공통 코드가 정상 등록되었습니다."), HttpStatus.OK);
     }
 
     @Operation(summary = "공통 코드 상세 목록", description = "공통 코드 상세 조회")
@@ -70,5 +81,7 @@ public class CmmnCdController {
         // 공통 코드 상세 목록 조회
         return new ResponseEntity<>(new CmmnResponseModel<>(cmmnCdService.selCmmnCdDetailList(cmmnCdSO)), HttpStatus.OK);
     }
+
+
 
 }

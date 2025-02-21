@@ -1,5 +1,6 @@
 package com.project.module.bo.cm.cmc.repository;
 
+import com.project.module.bo.cm.cmc.domain.po.CmmnCdPO;
 import com.project.module.bo.cm.cmc.domain.po.GrpCdPO;
 import com.project.module.bo.cm.cmc.domain.so.CmmnCdSO;
 import com.project.module.bo.cm.cmc.domain.so.GrpCdSO;
@@ -25,6 +26,9 @@ public interface CmmnCdMapper {
     // 그룹 코드 기본 목록 조회
     List<GrpCdVO> selGrpCdList(GrpCdSO grpCdSO);
 
+    // 그룹 코드 존재 여부 확인
+    GrpCdVO checkGrpCodeAndUseYn(String grpCode);
+    
     // 그룹 코드 등록
     void insGrpCd(GrpCdPO grpCdPO);
 
@@ -34,4 +38,6 @@ public interface CmmnCdMapper {
     // 공통 코드 상세 목록 조회
     List<CmmnCdVO> selCmmnCdDetailList(CmmnCdSO cmmnCdSO);
 
+    // 그룹 코드 등록
+    void insCmmnCd(CmmnCdPO cmmnCdPO);
 }

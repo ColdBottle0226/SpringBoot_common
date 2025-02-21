@@ -13,13 +13,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Schema(description = "임시 회원 DTO")
 public class UserDto {
-    @Schema(description = "회원 시퀀스", example = "1")
+    @Schema(description = "회원 시퀀스", example = "2")
     private int userSeq;
 
-    @Schema(description = "회원 Id", example = "kbc1234")
+    @Schema(description = "회원 Id", example = "admin")
     private String userId;
 
-    @Schema(description = "회원명", example = "test")
+    @Schema(description = "회원명", example = "admin")
     private String userName;
 
     @Schema(description = "비밀번호", example = "1234")
